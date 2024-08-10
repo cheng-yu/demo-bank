@@ -1,23 +1,13 @@
 const { v4: uuidv4 } = require('uuid');
 
 class Account {
-  #id;
-  #accountNumber;
   #balance;
 
   constructor(name, balance = 0) {
-    this.#id = uuidv4();
-    this.#accountNumber = uuidv4();
+    this.id = uuidv4();
+    this.accountNumber = uuidv4();
     this.name = name;
     this.#balance = balance;
-  }
-
-  get id() {
-    return this.#id;
-  }
-
-  get accountNumber() {
-    return this.#accountNumber;
   }
 
   get balance() {
