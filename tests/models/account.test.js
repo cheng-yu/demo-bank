@@ -1,4 +1,4 @@
-const Account = require('../../src/models/account.js');
+const Account = require('../../src/models/account');
 
 describe('Account model', () => {
   describe('constructor', () => {
@@ -69,7 +69,7 @@ describe('Account model', () => {
       const account = new Account('John Doe', 1000);
       expect(account.id).toBeDefined();
     });
-    
+
     it('should return the correct account number', () => {
       const account = new Account('John Doe', 1000);
       expect(account.accountNumber).toBeDefined();
