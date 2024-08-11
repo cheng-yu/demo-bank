@@ -3,7 +3,8 @@ const { accounts: accountsDb } = require('../db');
 
 class AccountService {
   createAccount(data) {
-    const account = new Account(data.name, data.balance);
+    const { name, balance } = data;
+    const account = new Account(name, balance);
     accountsDb[account.id] = account;
     return account;
   }
