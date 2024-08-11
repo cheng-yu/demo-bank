@@ -15,21 +15,24 @@ const OperationStatus = {
 
 class TransferRequest {
   constructor(type, fromAccountId, toAccountId, amount, status = OperationStatus.PENDING) {
-    if (!Object.values(OperationType).includes(type)) {
-      throw new Error('Invalid operation type');
-    }
-    if (!Object.values(OperationStatus).includes(status)) {
-      throw new Error('Invalid operation status');
+    switch (type) {
+      case OperationType.DEPOSIT:
+      case OperationType.WITHDRAW:
+        if (toAccountId) {
+          throw new Error('Invalid operation type');
+        }
+        break;
+      case OperationType.TRANSFER:
+        if (!toAccountId) {
+          throw new Error('Invalid operation type');
+        }
+        break;
+      default:
+        throw new Error('Invalid operation type');
     }
 
-    if (type === OperationType.DEPOSIT || type === OperationType.WITHDRAW) {
-      if (toAccountId) {
-        throw new Error('Invalid operation type');
-      }
-    } else if (type === OperationType.TRANSFER) {
-      if (!toAccountId) {
-        throw new Error('Invalid operation type');
-      }
+    if (!Object.values(OperationStatus).includes(status)) {
+      throw new Error('Invalid operation status');
     }
 
     if (amount <= 0) {
