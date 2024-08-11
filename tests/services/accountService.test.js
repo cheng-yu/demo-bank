@@ -9,6 +9,8 @@ jest.mock('../../src/db', () => ({
 const { accounts: accountsDb } = require('../../src/db');
 
 describe('AccountService', () => {
+  const service = new AccountService();
+
   afterEach(() => {
     // Clear the accounts database after each test
     Object.keys(accountsDb).forEach((key) => delete accountsDb[key]);
@@ -17,7 +19,6 @@ describe('AccountService', () => {
   describe('createAccount', () => {
     it('should create a new account and store it in the database', () => {
       const accountData = { name: 'John Doe', balance: 100 };
-      const service = new AccountService();
       const createdAccount = service.createAccount(accountData);
 
       expect(createdAccount).toBeInstanceOf(Account);
@@ -30,7 +31,6 @@ describe('AccountService', () => {
 
   describe('getAccountList', () => {
     it('should return a list of all accounts in the database', () => {
-      const service = new AccountService();
       const account1 = new Account('Alice', 200);
       const account2 = new Account('Bob', 50);
       accountsDb[account1.id] = account1;
@@ -42,8 +42,6 @@ describe('AccountService', () => {
     });
 
     it('should return an empty list if there are no accounts in the database', () => {
-      const service = new AccountService();
-
       const accountList = service.getAccountList();
 
       expect(accountList).toEqual([]);
@@ -52,7 +50,6 @@ describe('AccountService', () => {
 
   describe('getAccountById', () => {
     it('should return the account with the specified ID', () => {
-      const service = new AccountService();
       const account1 = new Account('Alice', 200);
       const account2 = new Account('Bob', 50);
       accountsDb[account1.id] = account1;
@@ -64,7 +61,6 @@ describe('AccountService', () => {
     });
 
     it('should return undefined if the account with the specified ID is not found', () => {
-      const service = new AccountService();
       const accountId = 'non-existent-id';
 
       const foundAccount = service.getAccountById(accountId);
