@@ -40,3 +40,26 @@ describe('POST /accounts', () => {
     expect(response.body.balance).toBe(undefined);
   });
 });
+
+describe('GET /accounts/:id', () => {
+  afterAll(() => {
+    server.close();
+  });
+
+  it('should respond with 404 if account does not exist', async () => {
+    const response = await request(app).get('/accounts/invalid-id');
+    expect(response.statusCode).toBe(404);
+    expect(response.text).toBe('Account not found');
+  });
+
+  it('should respond with 200 and the account', async () => {
+    const account = accountService.createAccount({ name: 'Account 1', balance: 100 });
+
+    const response = await request(app).get(`/accounts/${account.id}`);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.id).toBe(account.id);
+    expect(response.body.accountNumber).toBe(account.accountNumber);
+    expect(response.body.name).toBe('Account 1');
+    expect(response.body.balance).toBe(100);
+  });
+});

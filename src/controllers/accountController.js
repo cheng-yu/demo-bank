@@ -15,7 +15,18 @@ const createAccount = (req, res) => {
   res.json(account);
 };
 
+const getAccountById = (req, res) => {
+  const accountService = new AccountService();
+  const account = accountService.getAccountById(req.params.id);
+  if (!account) {
+    res.status(404).send('Account not found');
+  } else {
+    res.json({ ...account, balance: account.balance });
+  }
+}
+
 module.exports = {
   getAccounts,
-  createAccount
+  createAccount,
+  getAccountById
 };
