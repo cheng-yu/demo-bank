@@ -1,20 +1,20 @@
 const Account = require('../models/account');
-const { accounts: accountsDb } = require('../db');
+const { accounts: db } = require('../db');
 
 class AccountService {
   createAccount(data) {
     const { name, balance } = data;
     const account = new Account(name, balance);
-    accountsDb[account.id] = account;
+    db[account.id] = account;
     return account;
   }
 
   getAccountList() {
-    return Object.values(accountsDb);
+    return Object.values(db);
   }
 
   getAccountById(id) {
-    return accountsDb[id];
+    return db[id];
   }
 }
 
